@@ -23,12 +23,19 @@ namespace DrawFunction
 
         public async Task<string> GetDrawedBase64String(string imageUri, float x, float y, float len)
         {
-            HttpClient client = new HttpClient();
-            string requestUri = "http://padaiapi.azurewebsites.net/api/draw/";
-            requestUri += String.Format("{0}/{y}/{len}", x, y, len);
-            StringContent content = new StringContent(imageUri);
-            HttpResponseMessage response = await client.PostAsync(requestUri, content);
-            return await response.Content.ReadAsStringAsync();
+            try
+            {
+                HttpClient client = new HttpClient();
+                string requestUri = "http://padaiapi.azurewebsites.net/api/draw/";
+                requestUri += String.Format("{0}/{1}/{2}", x, y, len);
+                StringContent content = new StringContent(imageUri);
+                HttpResponseMessage response = await client.PostAsync(requestUri, content);
+                return await response.Content.ReadAsStringAsync();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }            
         }  
     }
 }
