@@ -6,29 +6,27 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
+using Newtonsoft.Json;
 
 namespace DrawFunction
 {
-    public class DrawFunction : ContentPage
+    public class Draw : ContentPage
     {
-        public DrawFunction()
-        {            
-        }
-
         public Stream GetStream(string imageBase64)
         {
             MemoryStream ms = new MemoryStream(Convert.FromBase64String(imageBase64));
             return ms;           
         }
 
-        public async Task<string> GetDrawedBase64String(string imageUri, float x, float y, float len)
+        public async Task<string> GetDrawedImage(MyDataType mydata)
         {
             try
             {
+                string mydataJson = JsonConvert.SerializeObject(mydata);
+
                 HttpClient client = new HttpClient();
-                string requestUri = "http://padaiapi.azurewebsites.net/api/draw/";
-                requestUri += String.Format("{0}/{1}/{2}", x, y, len);
-                StringContent content = new StringContent(imageUri);
+                string requestUri = "http://padaiapi.azurewebsites.net/api/draw/";                
+                StringContent content = new StringContent(mydataJson);
                 HttpResponseMessage response = await client.PostAsync(requestUri, content);
                 return await response.Content.ReadAsStringAsync();
             }
@@ -37,5 +35,34 @@ namespace DrawFunction
                 throw ex;
             }            
         }  
+    }
+
+    public class MyDataType
+    {
+        public string imageuri { get; set; }
+        public List<Rect> rects{ get; set; }
+        public List<Age> ages { get; set; }
+    }
+
+    public class Rect
+    {
+        public Rect(int x, int y, int len)
+        {
+            x = this.x;
+            y = this.y;
+            len = this.len;
+        }
+        public int x { get; set; }
+        public int y { get; set; }
+        public int len { get; set; }
+    }
+
+    public class Age
+    {
+        public Age(double age)
+        {
+            age = this.age;
+        }
+        public double age { get; set; }
     }
 }
