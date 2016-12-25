@@ -26,6 +26,7 @@ namespace DrawFunction
 
                 HttpClient client = new HttpClient();
                 string requestUri = "http://padaiapi.azurewebsites.net/api/draw/";                
+                // string requestUri = "http://localhost:24721/api/draw/";
                 StringContent content = new StringContent(mydataJson);
                 HttpResponseMessage response = await client.PostAsync(requestUri, content);
                 return await response.Content.ReadAsStringAsync();
@@ -40,17 +41,17 @@ namespace DrawFunction
     public class MyDataType
     {
         public string imageuri { get; set; }
-        public List<Rect> rects{ get; set; }
-        public List<Age> ages { get; set; }
+        public List<Rect> rects = new List<Rect>();
+        public List<Age> ages = new List<Age>();
     }
 
     public class Rect
     {
         public Rect(int x, int y, int len)
         {
-            x = this.x;
-            y = this.y;
-            len = this.len;
+            this.x = x;
+            this.y = y;
+            this.len = len;
         }
         public int x { get; set; }
         public int y { get; set; }
@@ -61,7 +62,7 @@ namespace DrawFunction
     {
         public Age(double age)
         {
-            age = this.age;
+            this.age = age;
         }
         public double age { get; set; }
     }
