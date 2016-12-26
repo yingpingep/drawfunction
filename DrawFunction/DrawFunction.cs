@@ -25,8 +25,8 @@ namespace DrawFunction
                 string mydataJson = JsonConvert.SerializeObject(mydata);
 
                 HttpClient client = new HttpClient();
-                string requestUri = "http://padaiapi.azurewebsites.net/api/draw/";                
-                // string requestUri = "http://localhost:24721/api/draw/";
+                string requestUri = "http://api4ws.azurewebsites.net/api/draw/";                
+                // string requestUri = "http://localhost:13120/api/draw/";
                 StringContent content = new StringContent(mydataJson);
                 HttpResponseMessage response = await client.PostAsync(requestUri, content);
                 return await response.Content.ReadAsStringAsync();
