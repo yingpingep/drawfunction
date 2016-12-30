@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using Newtonsoft.Json;
@@ -14,6 +12,7 @@ namespace DrawFunction
     {
         public Stream GetStream(string imageBase64)
         {
+            // Make a image from base64 string to a stream
             MemoryStream ms = new MemoryStream(Convert.FromBase64String(imageBase64));
             return ms;           
         }
@@ -22,13 +21,18 @@ namespace DrawFunction
         {
             try
             {
+                // Convert a JSON object to a string
                 string mydataJson = JsonConvert.SerializeObject(mydata);
 
+                // Create a http client to access web api
                 HttpClient client = new HttpClient();
                 string requestUri = "http://api4ws.azurewebsites.net/api/draw/";                
-                // string requestUri = "http://localhost:13120/api/draw/";
+
+                // Send a request with custom content to requestUri
                 StringContent content = new StringContent(mydataJson);
                 HttpResponseMessage response = await client.PostAsync(requestUri, content);
+
+                // Get the response content and convert it to a string type
                 return await response.Content.ReadAsStringAsync();
             }
             catch (Exception ex)
@@ -38,6 +42,10 @@ namespace DrawFunction
         }  
     }
 
+    /* MyDataType
+     * Use to reformat the data from cognitive service
+     * and add some custom information
+     */
     public class MyDataType
     {
         public string imageuri { get; set; }
