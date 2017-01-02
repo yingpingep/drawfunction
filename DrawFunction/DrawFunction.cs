@@ -26,7 +26,7 @@ namespace DrawFunction
 
                 // Create a http client to access web api
                 HttpClient client = new HttpClient();
-                string requestUri = "http://api4ws.azurewebsites.net/api/draw/";                
+                string requestUri = "http://api4ws.azurewebsites.net/api/draw/";
 
                 // Send a request with custom content to requestUri
                 StringContent content = new StringContent(mydataJson);
