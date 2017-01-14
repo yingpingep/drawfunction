@@ -17,7 +17,7 @@ namespace DrawFunction
             return ms;           
         }
 
-        public async Task<string> GetDrawedImage(MyDataType mydata)
+        public async Task<string> GetDrawedImageAsync(MyDataType mydata)
         {
             try
             {
