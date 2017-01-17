@@ -17,16 +17,26 @@ namespace DrawFunction
             return ms;           
         }
 
-        public async Task<string> GetDrawedImageAsync(MyDataType mydata)
+        public async Task<string> GetDrawedImageAsync(MyDataType myData)
         {
             try
             {
                 // Convert a JSON object to a string
-                string mydataJson = JsonConvert.SerializeObject(mydata);
+                string mydataJson = JsonConvert.SerializeObject(myData);
 
                 // Create a http client to access web api
                 HttpClient client = new HttpClient();
-                string requestUri = "http://api4ws.azurewebsites.net/api/draw/";
+                // string requestUri = "http://localhost:13120/";
+                string requestUri;
+
+                if (myData.emoes == null)
+                {
+                    requestUri = "http://api4ws.azurewebsites.net/api/draw/";
+                }
+                else
+                {
+                    requestUri = "http://api4ws.azurewebsites.net/api/edraw/";
+                }
 
                 // Send a request with custom content to requestUri
                 StringContent content = new StringContent(mydataJson);
@@ -50,7 +60,8 @@ namespace DrawFunction
     {
         public string imageuri { get; set; }
         public List<Rect> rects = new List<Rect>();
-        public List<Age> ages = new List<Age>();
+        public List<Age> ages = new List<Age>();        
+        public List<string> emoes = new List<string>();
     }
 
     public class Rect
