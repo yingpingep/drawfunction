@@ -13,8 +13,15 @@ namespace DrawFunction
         public Stream GetStream(string imageBase64)
         {
             // Make a image from base64 string to a stream
-            MemoryStream ms = new MemoryStream(Convert.FromBase64String(imageBase64));
-            return ms;           
+            try
+            {
+                MemoryStream ms = new MemoryStream(Convert.FromBase64String(imageBase64));
+                return ms;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }                 
         }
 
         public async Task<string> GetDrawedImageAsync(MyDataType myData)
@@ -26,10 +33,8 @@ namespace DrawFunction
 
                 // Create a http client to access web api
                 HttpClient client = new HttpClient();
-                // string requestUri = "http://localhost:13120/";
-                string requestUri;
-                
-                requestUri = "http://api4ws.azurewebsites.net/api/draw/";
+                // string requestUri = "http://localhost:13120/api/draw/";
+                string requestUri = "http://api4ws.azurewebsites.net/api/draw/";
                 
                 // Send a request with custom content to requestUri
                 StringContent content = new StringContent(mydataJson);
@@ -53,8 +58,7 @@ namespace DrawFunction
     {
         public string imageuri { get; set; }
         public List<Rect> rects = new List<Rect>();
-        public List<Age> ages = new List<Age>();        
-        public List<string> emoes = new List<string>();
+        public List<Age> ages = new List<Age>();
     }
 
     public class Rect
