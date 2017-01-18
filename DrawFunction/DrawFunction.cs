@@ -28,16 +28,9 @@ namespace DrawFunction
                 HttpClient client = new HttpClient();
                 // string requestUri = "http://localhost:13120/";
                 string requestUri;
-
-                if (myData.emoes == null)
-                {
-                    requestUri = "http://api4ws.azurewebsites.net/api/draw/";
-                }
-                else
-                {
-                    requestUri = "http://api4ws.azurewebsites.net/api/edraw/";
-                }
-
+                
+                requestUri = "http://api4ws.azurewebsites.net/api/draw/";
+                
                 // Send a request with custom content to requestUri
                 StringContent content = new StringContent(mydataJson);
                 HttpResponseMessage response = await client.PostAsync(requestUri, content);
